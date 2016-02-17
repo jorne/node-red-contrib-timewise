@@ -1,0 +1,84 @@
+<script type="text/javascript">
+RED.nodes.registerType('timewise',{
+  category: 'function',
+  color: '#E2D96E',
+  defaults: {
+    name: {
+      value: ''
+    },
+    time: {
+      value: '',
+      required: false,
+      validate: RED.validators.regex(/^([01]?\d|2[0-3]):[0-5]\d$/)
+    },
+    days: {
+      value: ''
+    }
+  },
+  inputs: 1,
+  outputs: 2,
+  icon: 'switch.png',
+  label: function() {
+    if (this.name) {
+      return this.name;
+    } else if (this.days && this.time) {
+      return 'Is it ' + this.time + ' yet on days ' + this.days + '? Y/N';
+    } else if (this.days) {
+      return 'Is it day ' + this.days + '? Y/N';
+    } else {
+      return 'Timewise';
+    }
+  },
+  oneditprepare: function () {
+    $("#node-input-days").val("");
+    $("#days-of-week input[type=checkbox]").removeAttr("checked");
+
+    if (this.days) {
+      this.days.split(",").forEach(function(v) {
+          $("#days-of-week [value=" + v + "]").prop("checked", true);
+      });
+    }
+  },
+  oneditsave: function () {
+    var days = $('#days-of-week input[type=checkbox]:checked').map(function(i, el) {
+      return $(el).val();
+    }).get();
+
+    $("#node-input-days").val(days.join(","));
+  }
+});
+</script>
+
+<script type="text/x-red" data-template-name="timewise">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-time"><i class="fa fa-clock-o"></i> Time</label>
+    <input type="time" id="node-input-time" placeholder="00:00">
+  </div>
+  <div class="form-row">
+    <label for="node-input-days"><i class="fa fa-calendar"></i> Day</label>
+    <div id="days-of-week" style="width:70%; display:inline-block; ">
+      <div>
+        <label><input type="checkbox" checked value="1" style="width:auto;"/> Monday</label>
+        <label><input type="checkbox" checked value="2" style="width:auto;"/> Tuesday</label>
+        <label><input type="checkbox" checked value="3" style="width:auto;"/> Wednesday</label>
+      </div>
+      <div>
+        <label><input type="checkbox" checked value="4" style="width:auto;"/> Thursday</label>
+        <label><input type="checkbox" checked value="5" style="width:auto;"/> Friday</label>
+        <label><input type="checkbox" checked value="6" style="width:auto;"/> Saturday</label>
+      </div>
+      <div>
+        <label><input type="checkbox" checked value="0" style="width:auto;"/> Sunday</label>
+      </div>
+      <input type="hidden" id="node-input-days">
+    </div>
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="timewise">
+  <p>A node to route messages based on day and time.</p>
+</script>

@@ -1,0 +1,36 @@
+{
+  "name": "node-red-contrib-timewise",
+  "version": "0.1.0",
+  "description": "A node that compares the current time to the given time.",
+  "dependencies": {},
+  "keywords": [
+    "node-red",
+    "time",
+    "compare"
+  ],
+  "node-red": {
+    "nodes": {
+      "sample": "timewise/timewise.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorne/node-red-contrib-timewise.git"
+  },
+  "author": "Jorne Roefs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jorne/node-red-contrib-timewise/issues"
+  },
+  "homepage": "https://github.com/jorne/node-red-contrib-timewise#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-licenser": "^1.0.2",
+    "gulp-nodemon": "^2.0.6",
+    "istanbul": "^0.4.0",
+    "node-red": "git+https://github.com/node-red/node-red.git",
+    "should": "^7.1.1",
+    "sinon": "^1.17.3",
+    "supertest": "^1.1.0"
+  }
+}
